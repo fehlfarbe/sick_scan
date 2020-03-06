@@ -374,14 +374,14 @@ namespace sick_scan
     pn.getParam("cloud_topic", cloud_topic_val);
 
     ROS_INFO("Publishing laserscan-pointcloud2 to %s", cloud_topic_val.c_str());
-    cloud_pub_ = nh_.advertise<sensor_msgs::PointCloud2>(cloud_topic_val, 100);
+    cloud_pub_ = nh_.advertise<sensor_msgs::PointCloud2>(cloud_topic_val, nh_.param<int>("queue_size", 10));
 
-    imuScan_pub_ = nh_.advertise<sensor_msgs::Imu>("imu", 100);
+    imuScan_pub_ = nh_.advertise<sensor_msgs::Imu>("imu", nh_.param<int>("queue_size", 10));
 
 
-    Encoder_pub =nh_.advertise<sick_scan::Encoder>("encoder", 100);
+    Encoder_pub =nh_.advertise<sick_scan::Encoder>("encoder", nh_.param<int>("queue_size", 10));
     // scan publisher
-    pub_ = nh_.advertise<sensor_msgs::LaserScan>("scan", 1000);
+    pub_ = nh_.advertise<sensor_msgs::LaserScan>("scan", nh_.param<int>("queue_size", 10));
 
 #ifndef _MSC_VER
     diagnostics_.setHardwareID("none");   // set from device after connection
